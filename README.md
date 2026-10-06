@@ -1,2 +1,2 @@
 ### Bài tập tuần 5 - MI4090 
-(placeholder)....
+Thiết kế sơ đồ lớp UML (progessing...)
