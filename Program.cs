@@ -13,5 +13,8 @@ class Program
         Console.WriteLine();
         Projector pj1 = new Projector("DV02", "Máy chiếu Canon", 2023, 17_000_000m, DeviceStatus.Active , 650, 3001);
         pj1.DisplayDeviceInfo();
+        Console.WriteLine();
+        Printer pt1 = new Printer("DV03", "Máy in HP", 2023, 10_000_000m, DeviceStatus.Active , PrinterType.Laser, 50000, true);
+        pt1.DisplayDeviceInfo();
     }
 }
