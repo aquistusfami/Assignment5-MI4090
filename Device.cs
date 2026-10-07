@@ -34,4 +34,12 @@ public abstract class Device
   }
 
   public abstract void CalculateAnnualMaintenanceCost();
+  public virtual void DisplayDeviceInfo()
+  {
+    Console.WriteLine($"(+) Mã nhân sự: {DeviceId}");
+    Console.WriteLine($"(+) Tên thiết bị: {DeviceName}");
+    Console.WriteLine($"(+) Năm đưa vào sử dụng: {UsedYear:N0}");
+    Console.WriteLine($"(+) Giá mua: {Price:N0} VND");
+    Console.WriteLine($"(+) Trạng thái hoạt động: {Status}");
+  }
 }
