@@ -9,7 +9,7 @@ namespace Assignment5_MI4090;
 public enum DeviceStatus 
 {
   Active,
-  UnderMaintenace,
+  UnderMaintenance,
   Retired
 }
 
