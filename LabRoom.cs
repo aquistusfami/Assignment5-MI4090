@@ -2,3 +2,74 @@
 // 202418988
 // Nguyễn Văn Thế
 /****************/
+using System;
+
+namespace Assignment5_MI4090;
+
+public class LabRoom 
+{
+  public string LabRoomId { get; private set; }
+  public string LabRoomName { get; private set; }
+  public int Space { get; private set; }
+  private readonly List<Device> devices = new List<Device>();
+
+  public LabRoom(string id, string name, int space){
+    if(string.IsNullOrWhiteSpace(id)) throw new ArgumentException("Mã phòng không được trống.", nameof(id));
+    if(space < 0) throw new ArgumentOutOfRangeException(nameof(space), "Sức chưa không được âm.");
+    this.LabRoomId = id;
+    this.LabRoomName = name;
+    this.Space = space;
+  }
+
+  public void AddDevice(Device device)
+  {
+    if (device == null) throw new ArgumentNullException(nameof(device), "Thiết bị không được rỗng.");
+    if (FindDevice(device.DeviceId) != null) throw new InvalidOperationException($"Thiết bị với ID {device.DeviceId} đã tồn tại trong danh sách.");
+    devices.Add(device);
+  }
+
+  public Device? FindDevice(string id)
+  {
+    if (string.IsNullOrWhiteSpace(id)) return null;
+    foreach (var dev in devices)
+    {
+      // khong phan biet hoa, thuong
+      if (dev.DeviceId.Equals(id, StringComparison.OrdinalIgnoreCase))
+      {
+        return dev;
+      }
+    }
+    return null;
+  }
+
+  public void RemoveDevice(string id)
+  {
+    if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id), "Mã thiết bị không được rỗng.");
+    Device? devi = FindDevice(id);
+    if (devi == null) throw new ArgumentException("Thiết bị không tồn tại.",nameof(id));
+    devices.Remove(devi);
+  }
+
+  public decimal CalculateAnnualMaintenanceCost()
+  {
+    decimal totalMCost = 0.0m;
+    foreach (var dev in devices)
+    {
+      totalMCost += dev.CalculateAnnualMaintenanceCost();
+    }
+    return totalMCost;
+  }
+
+  public List<Device> GetDevicesRequiringMaintenance()
+  {
+    List<Device> rmdevices = new List<Device>();
+    foreach (var dev in devices)
+    {
+      if (dev.Status == DeviceStatus.UnderMaintenance || (2026 - dev.UsedYear >= 5))
+      {
+        rmdevices.Add(dev);
+      }
+    }
+    return rmdevices;
+  }
+}
