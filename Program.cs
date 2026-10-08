@@ -16,5 +16,12 @@ class Program
         Console.WriteLine();
         Printer pt1 = new Printer("DV03", "Máy in HP", 2023, 10_000_000m, DeviceStatus.Active , PrinterType.Laser, 50000, true);
         pt1.DisplayDeviceInfo();
+        cp1.Connect("192.168.0.1");
+        Console.WriteLine();
+        cp1.DisplayDeviceInfo();
+        NetworkPrinter np1 = new NetworkPrinter("DV04", "Máy in Canon", 2023, 10_000_000m, DeviceStatus.Active , PrinterType.Laser, 50000, true);
+        np1.Connect("192.168.0.1");
+        Console.WriteLine();
+        np1.DisplayDeviceInfo();
     }
 }

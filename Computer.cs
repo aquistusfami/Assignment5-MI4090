@@ -11,6 +11,8 @@ public class Computer : Device
   public int RamStorage { get; private set; }
   public string Processor { get; private set; }
   public bool HasGPU { get; private set; }
+  public string? IpAddress { get; private set; }
+  public bool IsConnected { get; private set; }
 
   public Computer(string id, string name, int usedYear, decimal price, DeviceStatus status, int ramStorage, string processor, bool hasGPU) : base(id, name, usedYear, price, status)
   {
@@ -37,6 +39,18 @@ public class Computer : Device
     else return 0.05m*Price;
   }
 
+  public void Connect(string ip)
+  {
+    this.IpAddress = ip;
+    this.IsConnected = true;
+  }
+
+  public void Disconnect()
+  {
+    this.IpAddress = string.Empty;
+    this.IsConnected = false;
+  }
+  
   public override void DisplayDeviceInfo()
   {
     base.DisplayDeviceInfo();
@@ -44,5 +58,7 @@ public class Computer : Device
     Console.WriteLine($"-> Chip xử lý: {Processor}");
     Console.WriteLine($"-> GPU: {HasGPU}");
     Console.WriteLine($"-> Tiền bảo dưỡng: {CalculateAnnualMaintenanceCost():N0} VND");
+    Console.WriteLine($"[-] Địa chỉ IP: {IpAddress}");
+    Console.WriteLine($"[-] Trạng thái kết nối: {IsConnected}");
   }
 }
