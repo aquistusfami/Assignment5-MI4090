@@ -27,20 +27,11 @@ public class Printer : Device
   }
 
   public override decimal CalculateAnnualMaintenanceCost()
-  {
-    if (this.PrintedPage > 100000 && this.IsColor == true) 
-    {
-      return 0.04m*this.Price + 800_000m;
-    } 
-    else if (this.PrintedPage > 100000 && this.IsColor == false) 
-    {
-      return 0.04m*this.Price + 500_000m;
-    }
-    else if (this.PrintedPage <= 100000 && this.IsColor == true)
-    {
-      return 0.04m*this.Price + 300_000m;
-    }
-    else return 0.04m*this.Price;
+  { 
+    decimal cost = 0.04m*this.Price;
+    if (PrintedPage > 100000) cost += 500_000m;
+    if (IsColor) cost += 300_000m;
+    return cost;
   }
 
   public override string ToString()
