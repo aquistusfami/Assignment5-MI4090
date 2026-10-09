@@ -24,6 +24,7 @@ public class LabRoom
   public void AddDevice(Device device)
   {
     if (device == null) throw new ArgumentNullException(nameof(device), "Thiết bị không được rỗng.");
+    if (devices.Count >= Space) throw new InvalidOperationException("Phòng đã đạt sức chứa tối đa.");
     if (FindDevice(device.DeviceId) != null) throw new InvalidOperationException($"Thiết bị với ID {device.DeviceId} đã tồn tại trong danh sách.");
     devices.Add(device);
   }
@@ -44,10 +45,9 @@ public class LabRoom
 
   public bool RemoveDevice(string id)
   {
-    if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id), "Mã thiết bị không được rỗng.");
+    if (string.IsNullOrWhiteSpace(id)) return false;
     Device? devi = FindDevice(id);
-    if (devi == null) throw new ArgumentException("Thiết bị không tồn tại.",nameof(id));
-    return devices.Remove(devi);
+    return devi != null && devices.Remove(devi);
   }
 
   public decimal CalculateAnnualMaintenanceCost()
