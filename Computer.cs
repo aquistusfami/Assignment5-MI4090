@@ -6,7 +6,7 @@ using System;
 
 namespace Assignment5_MI4090;
 
-public class Computer : Device 
+public class Computer : Device, INetworkable 
 {
   public int RamStorage { get; private set; }
   public string Processor { get; private set; }
