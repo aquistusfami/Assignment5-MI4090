@@ -26,11 +26,11 @@ public class Projector : Device
     else return 0.03m*this.Price;
   }
 
-  public override void DisplayDeviceInfo()
+  public override string ToString()
   {
-    base.DisplayDeviceInfo();
-    Console.WriteLine($"-> Độ sáng: {Light} lumen");
-    Console.WriteLine($"-> Số giờ sử dụng bóng: {UsedHours:N0} giờ");
-    Console.WriteLine($"-> Tiền bảo dưỡng: {CalculateAnnualMaintenanceCost():N0} VND");
+    return base.ToString() + Environment.NewLine +
+    $"-> Độ sáng: {Light} lumen" + Environment.NewLine +
+    $"-> Số giờ sử dụng bóng: {UsedHours:N0} giờ" + Environment.NewLine + 
+    $"-> Tiền bảo dưỡng: {CalculateAnnualMaintenanceCost():N0} VND";
   }
 }

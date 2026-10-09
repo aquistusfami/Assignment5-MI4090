@@ -24,7 +24,7 @@ public abstract class Device
   public Device(string id, string name, int usedYear, decimal price, DeviceStatus status)
   {
     if(string.IsNullOrWhiteSpace(id)) throw new ArgumentException("Mã thiết bị không được trống.", nameof(id));
-    if(usedYear > 2026) throw new ArgumentOutOfRangeException(nameof(usedYear),"Năm đưa vào sử dụng không lớn hơn năm hiện tại (2026).");
+    if(usedYear > DateTime.Now.Year) throw new ArgumentOutOfRangeException(nameof(usedYear),"Năm đưa vào sử dụng không lớn hơn năm hiện tại (2026).");
     if(price <= 0) throw new ArgumentOutOfRangeException(nameof(price), "Giá mua không được <= 0.");
     this.DeviceId = id;
     this.DeviceName = name;
@@ -34,12 +34,12 @@ public abstract class Device
   }
 
   public abstract decimal CalculateAnnualMaintenanceCost();
-  public virtual void DisplayDeviceInfo()
+  public override string ToString()
   {
-    Console.WriteLine($"(+) Mã thiết bị: {DeviceId}");
-    Console.WriteLine($"(+) Tên thiết bị: {DeviceName}");
-    Console.WriteLine($"(+) Năm đưa vào sử dụng: {UsedYear}");
-    Console.WriteLine($"(+) Giá mua: {Price:N0} VND");
-    Console.WriteLine($"(+) Trạng thái hoạt động: {Status}");
+    return $"(+) Mã thiết bị: {DeviceId}" + Environment.NewLine +
+    $"(+) Tên thiết bị: {DeviceName}" + Environment.NewLine +
+    $"(+) Năm đưa vào sử dụng: {UsedYear}" + Environment.NewLine +
+    $"(+) Giá mua: {Price:N0} VND" + Environment.NewLine +
+    $"(+) Trạng thái hoạt động: {Status}";
   }
 }

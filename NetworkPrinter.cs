@@ -18,20 +18,22 @@ public class NetworkPrinter : Printer, INetworkable
 
   public void Connect(string ip)
   {
+    if (string.IsNullOrWhiteSpace(ip)) throw new ArgumentException("Địa chỉ IP không được rỗng", nameof(ip));
+    if (IsConnected) throw new InvalidOperationException("Máy in đang kết nối mạng!");
     this.IpAddress = ip;
     this.IsConnected = true;
   }
 
   public void Disconnect()
   {
-    this.IpAddress = string.Empty;
+    this.IpAddress = null;
     this.IsConnected = false;
   }
 
-  public override void DisplayDeviceInfo()
+  public override string ToString()
   {
-    base.DisplayDeviceInfo();
-    Console.WriteLine($"[-] Địa chỉ IP: {IpAddress}");
-    Console.WriteLine($"[-] Trạng thái kết nối: {IsConnected}");
+    return base.ToString() + Environment.NewLine + 
+    $"[-] Địa chỉ IP: {IpAddress}" + Environment.NewLine +
+    $"[-] Trạng thái kết nối: {IsConnected}";
   }
 }

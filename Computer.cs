@@ -23,16 +23,16 @@ public class Computer : Device, INetworkable
 
   public override decimal CalculateAnnualMaintenanceCost()
   {
-    int spentTime = 2026 - this.UsedYear;
-    if (spentTime >= 5 && this.HasGPU == true)
+    int spentTime = DateTime.Now.Year - this.UsedYear;
+    if (spentTime > 5 && this.HasGPU == true)
     {
       return 0.08m*Price;
     } 
-    else if (spentTime >= 5 && this.HasGPU == false) 
+    else if (spentTime > 5 && this.HasGPU == false) 
     {
       return 0.06m*Price;
     }
-    else if (spentTime < 5 && this.HasGPU == true)
+    else if (spentTime <= 5 && this.HasGPU == true)
     {
       return 0.07m*Price;
     } 
@@ -41,24 +41,26 @@ public class Computer : Device, INetworkable
 
   public void Connect(string ip)
   {
+    if (string.IsNullOrWhiteSpace(ip)) throw new ArgumentException("Địa chỉ IP không được rỗng", nameof(ip));
+    if (IsConnected) throw new InvalidOperationException("Máy tính đang kết nối mạng!");
     this.IpAddress = ip;
     this.IsConnected = true;
   }
 
   public void Disconnect()
   {
-    this.IpAddress = string.Empty;
+    this.IpAddress = null;
     this.IsConnected = false;
   }
   
-  public override void DisplayDeviceInfo()
+  public override string ToString()
   {
-    base.DisplayDeviceInfo();
-    Console.WriteLine($"-> Dung lượng RAM: {RamStorage:N0} GB");
-    Console.WriteLine($"-> Chip xử lý: {Processor}");
-    Console.WriteLine($"-> GPU: {HasGPU}");
-    Console.WriteLine($"-> Tiền bảo dưỡng: {CalculateAnnualMaintenanceCost():N0} VND");
-    Console.WriteLine($"[-] Địa chỉ IP: {IpAddress}");
-    Console.WriteLine($"[-] Trạng thái kết nối: {IsConnected}");
+    return base.ToString() + Environment.NewLine +
+    $"-> Dung lượng RAM: {RamStorage:N0} GB" + Environment.NewLine +
+    $"-> Chip xử lý: {Processor}" + Environment.NewLine + 
+    $"-> GPU: {HasGPU}" + Environment.NewLine + 
+    $"-> Tiền bảo dưỡng: {CalculateAnnualMaintenanceCost():N0} VND" + Environment.NewLine +
+    $"[-] Địa chỉ IP: {IpAddress}" + Environment.NewLine +
+    $"[-] Trạng thái kết nối: {IsConnected}";
   }
 }

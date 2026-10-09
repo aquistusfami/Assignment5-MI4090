@@ -42,12 +42,12 @@ public class LabRoom
     return null;
   }
 
-  public void RemoveDevice(string id)
+  public bool RemoveDevice(string id)
   {
     if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id), "Mã thiết bị không được rỗng.");
     Device? devi = FindDevice(id);
     if (devi == null) throw new ArgumentException("Thiết bị không tồn tại.",nameof(id));
-    devices.Remove(devi);
+    return devices.Remove(devi);
   }
 
   public decimal CalculateAnnualMaintenanceCost()
@@ -65,7 +65,7 @@ public class LabRoom
     List<Device> rmdevices = new List<Device>();
     foreach (var dev in devices)
     {
-      if (dev.Status == DeviceStatus.UnderMaintenance || (2026 - dev.UsedYear >= 5))
+      if (dev.Status == DeviceStatus.UnderMaintenance || (DateTime.Now.Year - dev.UsedYear > 5))
       {
         rmdevices.Add(dev);
       }
@@ -79,7 +79,7 @@ public class LabRoom
     Console.WriteLine($"------------------------------------------------------------");
     foreach (var dev in devices)
     {
-      dev.DisplayDeviceInfo();
+      Console.WriteLine(dev);
       Console.WriteLine();
     }
   }

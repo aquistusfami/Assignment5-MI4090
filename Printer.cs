@@ -43,12 +43,12 @@ public class Printer : Device
     else return 0.04m*this.Price;
   }
 
-  public override void DisplayDeviceInfo()
+  public override string ToString()
   {
-    base.DisplayDeviceInfo();
-    Console.WriteLine($"-> Loại máy in: {Type}");
-    Console.WriteLine($"-> Số trang đã in: {PrintedPage:N0} trang");
-    Console.WriteLine($"-> Có in màu: {IsColor}");
-    Console.WriteLine($"-> Tiền bảo dưỡng: {CalculateAnnualMaintenanceCost():N0} VND");
+    return base.ToString() + Environment.NewLine +
+    $"-> Loại máy in: {Type}" + Environment.NewLine +
+    $"-> Số trang đã in: {PrintedPage:N0} trang" + Environment.NewLine +
+    $"-> Có in màu: {IsColor}" + Environment.NewLine +
+    $"-> Tiền bảo dưỡng: {CalculateAnnualMaintenanceCost():N0} VND";
   }
 }

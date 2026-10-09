@@ -66,8 +66,9 @@ class Program
         {
             dev.Connect("168.192.1.1");
         }
-        cp1.DisplayDeviceInfo();
-        cp2.DisplayDeviceInfo();
-        np1.DisplayDeviceInfo();
+        foreach (INetworkable dev in ndevs)
+        {
+            Console.WriteLine(dev);
+        }
     }
 }
