@@ -72,4 +72,15 @@ public class LabRoom
     }
     return rmdevices;
   }
+
+  public void DisplayInfo()
+  {
+    Console.WriteLine($"<!> Các thiết bị của Lab {LabRoomName} - id: {LabRoomId} là:");
+    Console.WriteLine($"------------------------------------------------------------");
+    foreach (var dev in devices)
+    {
+      dev.DisplayDeviceInfo();
+      Console.WriteLine();
+    }
+  }
 }
