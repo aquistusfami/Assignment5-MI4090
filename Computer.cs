@@ -24,19 +24,10 @@ public class Computer : Device, INetworkable
   public override decimal CalculateAnnualMaintenanceCost()
   {
     int spentTime = DateTime.Now.Year - this.UsedYear;
-    if (spentTime > 5 && this.HasGPU == true)
-    {
-      return 0.08m*Price;
-    } 
-    else if (spentTime > 5 && this.HasGPU == false) 
-    {
-      return 0.06m*Price;
-    }
-    else if (spentTime <= 5 && this.HasGPU == true)
-    {
-      return 0.07m*Price;
-    } 
-    else return 0.05m*Price;
+    decimal rate = 0.05m;
+    if (HasGPU) rate += 0.02m;
+    if (spentTime > 5) rate += 0.01m;
+    return rate * Price;
   }
 
   public void Connect(string ip)
