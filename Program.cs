@@ -24,39 +24,58 @@ class Program
         lr1.AddDevice(cp1);
 
         // thêm trùng mã 
-        // lr1.AddDevice(cp1);
-
+        try
+        {
+            lr1.AddDevice(cp1);
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine($"<Error>: {ex.Message}");
+        }
+        Console.WriteLine($"------------------------------------------------------------");
         lr1.AddDevice(cp2);
         lr1.AddDevice(pt1);
         lr2.AddDevice(pj1);
         lr2.AddDevice(np1);
 
         // in ds thiết bị từng phòng
-        // lr1.DisplayInfo();
-        // lr2.DisplayInfo();
+        lr1.DisplayInfo();
+        Console.WriteLine($"------------------------------------------------------------");
+        lr2.DisplayInfo();
 
         // tổng chi phí bảo dưỡng từng phòng
-        // Console.WriteLine("Giá: {0} VND",lr1.CalculateAnnualMaintenanceCost());
-        // Console.WriteLine("Giá: {0} VND",lr2.CalculateAnnualMaintenanceCost());
+        Console.WriteLine($"------------------------------------------------------------");
+        Console.WriteLine("Chi phí phòng {0} - {1}: {2} VND",lr1.LabRoomName,lr1.LabRoomId,lr1.CalculateAnnualMaintenanceCost());
+        Console.WriteLine("Chi phí phòng {0} - {1}: {2} VND",lr2.LabRoomName,lr2.LabRoomId,lr2.CalculateAnnualMaintenanceCost());
 
         // liệt kê thiết bị cần bảo trì 
-        // List<Device> drm1 = lr1.GetDevicesRequiringMaintenance();
-        // foreach (var dev in drm1)
-        // {
-        //     Console.WriteLine("<-> {0} - {1}", dev.DeviceId, dev.DeviceName);
-        // }
-        // List<Device> drm2 = lr2.GetDevicesRequiringMaintenance();
-        // foreach (var dev in drm2)
-        // {
-        //     Console.WriteLine("<-> {0} - {1}", dev.DeviceId, dev.DeviceName);
-        // }
+        Console.WriteLine($"------------------------------------------------------------");
+        List<Device> drm1 = lr1.GetDevicesRequiringMaintenance();
+        foreach (var dev in drm1)
+        {
+            Console.WriteLine("<-> {0} - {1}", dev.DeviceId, dev.DeviceName);
+        }
+        List<Device> drm2 = lr2.GetDevicesRequiringMaintenance();
+        foreach (var dev in drm2)
+        {
+            Console.WriteLine("<-> {0} - {1}", dev.DeviceId, dev.DeviceName);
+        }
 
         // kết nối mạng cho các thiết bị = method
-        // cp1.Connect("168.192.1.1");
-        // cp2.Connect("168.192.1.1");
-        // np1.Connect("168.192.1.1");
+        Console.WriteLine($"------------------------------------------------------------");
+        cp1.Connect("168.192.1.1");
+        cp2.Connect("168.192.1.1");
+        np1.Connect("168.192.1.1");
 
+        Console.WriteLine(cp1);
+        Console.WriteLine(cp2);
+        Console.WriteLine(np1);
+
+        cp1.Disconnect();
+        cp2.Disconnect();
+        np1.Disconnect();
         // duyệt các thiết bị qua interface và thực hiện kết nối cùng 1 wifi 
+        Console.WriteLine($"------------------------------------------------------------");
         List<INetworkable> ndevs = new List<INetworkable>();
         ndevs.Add(cp1);
         ndevs.Add(cp2);
