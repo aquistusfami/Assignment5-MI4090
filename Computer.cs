@@ -6,6 +6,9 @@ using System;
 
 namespace Assignment5_MI4090;
 
+/// <summary>
+/// Lớp Computer kế thừa Device và hợp đồng interface với INetworkable
+/// </summary>
 public class Computer : Device, INetworkable 
 {
   public int RamStorage { get; private set; }
@@ -14,6 +17,18 @@ public class Computer : Device, INetworkable
   public string? IpAddress { get; private set; }
   public bool IsConnected { get; private set; }
 
+  /// <summary>
+  /// Constructor khởi tạo computer với các thông tin cần thiết 
+  /// </summary>
+  /// <param name="id">Mã máy tính</param>
+  /// <param name="name">Tên máy tính</param>
+  /// <param name="usedYear">Năm đưa vào sử dụng</param>
+  /// <param name="price">Giá mua</param>
+  /// <param name="status">Trạng thái</param>
+  /// <param name="ramStorage">Dung lượng RAM</param>
+  /// <param name="processor">CPU của máy</param>
+  /// <param name="hasGPU">Có card rời không</param>
+  /// <returns></returns>
   public Computer(string id, string name, int usedYear, decimal price, DeviceStatus status, int ramStorage, string processor, bool hasGPU) : base(id, name, usedYear, price, status)
   {
     this.RamStorage = ramStorage;
@@ -21,6 +36,10 @@ public class Computer : Device, INetworkable
     this.HasGPU = hasGPU;
   }
 
+  /// <summary>
+  /// Method tính chi phí bảo dưỡng của máy tính
+  /// </summary>
+  /// <returns>Chi phí bảo dưỡng (decimal)</returns>
   public override decimal CalculateAnnualMaintenanceCost()
   {
     int spentTime = DateTime.Now.Year - this.UsedYear;
@@ -30,6 +49,10 @@ public class Computer : Device, INetworkable
     return rate * Price;
   }
 
+  /// <summary>
+  /// Method kết nối mạng xây dựng từ Interface
+  /// </summary>
+  /// <param name="ip">Địa chỉ IP</param>
   public void Connect(string ip)
   {
     if (string.IsNullOrWhiteSpace(ip)) throw new ArgumentException("Địa chỉ IP không được rỗng", nameof(ip));
@@ -38,12 +61,19 @@ public class Computer : Device, INetworkable
     this.IsConnected = true;
   }
 
+  /// <summary>
+  /// Method ngắt kết nối mạng
+  /// </summary>
   public void Disconnect()
   {
     this.IpAddress = null;
     this.IsConnected = false;
   }
   
+  /// <summary>
+  /// Method override chuỗi thông tin của Device
+  /// </summary>
+  /// <returns>Chuỗi thông tin của máy tính</returns>
   public override string ToString()
   {
     return base.ToString() + Environment.NewLine +
