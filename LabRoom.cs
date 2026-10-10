@@ -6,6 +6,9 @@ using System;
 
 namespace Assignment5_MI4090;
 
+/// <summary>
+/// Lớp LabRoom đại diện cho phòng nghiên cứu
+/// </summary>
 public class LabRoom 
 {
   public string LabRoomId { get; private set; }
@@ -13,6 +16,12 @@ public class LabRoom
   public int Space { get; private set; }
   private readonly List<Device> devices = new List<Device>();
 
+  /// <summary>
+  /// Constructor khởi tạo thông tin cần thiết của LabRoom
+  /// </summary>
+  /// <param name="id">Mã phòng</param>
+  /// <param name="name">Tên phòng</param>
+  /// <param name="space">Sức chứa</param>
   public LabRoom(string id, string name, int space){
     if(string.IsNullOrWhiteSpace(id)) throw new ArgumentException("Mã phòng không được trống.", nameof(id));
     if(space < 0) throw new ArgumentOutOfRangeException(nameof(space), "Sức chưa không được âm.");
@@ -21,6 +30,10 @@ public class LabRoom
     this.Space = space;
   }
 
+  /// <summary>
+  /// Thêm thiết bị 
+  /// </summary>
+  /// <param name="device">Thiết bị</param>
   public void AddDevice(Device device)
   {
     if (device == null) throw new ArgumentNullException(nameof(device), "Thiết bị không được rỗng.");
@@ -29,6 +42,11 @@ public class LabRoom
     devices.Add(device);
   }
 
+  /// <summary>
+  /// Tìm thiết bị
+  /// </summary>
+  /// <param name="id">Mã thiết bị</param>
+  /// <returns>Thiết bị tìm thấy hoặc null</returns>
   public Device? FindDevice(string id)
   {
     if (string.IsNullOrWhiteSpace(id)) return null;
@@ -43,6 +61,11 @@ public class LabRoom
     return null;
   }
 
+  /// <summary>
+  /// Xóa thiết bị
+  /// </summary>
+  /// <param name="id">Mã thiết bị</param>
+  /// <returns>True nếu xóa thành công, false nếu không có thiết bị hoặc null</returns>
   public bool RemoveDevice(string id)
   {
     if (string.IsNullOrWhiteSpace(id)) return false;
@@ -50,6 +73,10 @@ public class LabRoom
     return devi != null && devices.Remove(devi);
   }
 
+  /// <summary>
+  /// Tính tổng chi phí bảo dưỡng của phòng
+  /// </summary>
+  /// <returns>Chi phí bảo dưỡng các thiết bị của phòng</returns>
   public decimal CalculateAnnualMaintenanceCost()
   {
     decimal totalMCost = 0.0m;
@@ -60,6 +87,10 @@ public class LabRoom
     return totalMCost;
   }
 
+  /// <summary>
+  /// Lấy danh sách các thiết bị cần bảo trì
+  /// </summary>
+  /// <returns>Danh sách thiết bị cần bảo trì</returns>
   public List<Device> GetDevicesRequiringMaintenance()
   {
     List<Device> rmdevices = new List<Device>();
