@@ -13,6 +13,9 @@ public enum DeviceStatus
   Retired
 }
 
+/// <summary>
+/// Lớp trừu tượng Device đại diện cho các thiết bị
+/// </summary>
 public abstract class Device 
 {
   public string DeviceId { get; private set; }
@@ -20,7 +23,15 @@ public abstract class Device
   public int UsedYear { get; private set; }
   public decimal Price { get; private set; }
   public DeviceStatus Status { get; private set; }
-
+  
+  /// <summary>
+  /// Constructor base cho các lớp sau này 
+  /// </summary>
+  /// <param name="id">Mã thiết bị</param>
+  /// <param name="name">Tên thiết bị</param>
+  /// <param name="usedYear">Năm đưa vào sử dụng</param>
+  /// <param name="price">Giá mua</param>
+  /// <param name="status">Trạng thái thiết bị</param>
   public Device(string id, string name, int usedYear, decimal price, DeviceStatus status)
   {
     if(string.IsNullOrWhiteSpace(id)) throw new ArgumentException("Mã thiết bị không được trống.", nameof(id));
@@ -32,8 +43,16 @@ public abstract class Device
     this.Price = price;
     this.Status = status;
   }
-
+  /// <summary>
+  /// Abstract method bắt các lớp con phải thiết lập
+  /// </summary>
+  /// <returns>Tiền bảo dưỡng hằng năm của thiết bị</returns>
   public abstract decimal CalculateAnnualMaintenanceCost();
+
+  /// <summary>
+  /// Method biểu diễn thông tin Device dạng chuỗi
+  /// </summary>
+  /// <returns>Thông tin thiết bị</returns>
   public override string ToString()
   {
     return $"(+) Mã thiết bị: {DeviceId}" + Environment.NewLine +
